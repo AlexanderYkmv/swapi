@@ -18,11 +18,7 @@ public class PersonDTO {
     private String eyeColor;
     private String birthYear;
     private String gender;
-
     private Set<Integer> filmIds; 
-    private Integer planetId;
-    
-    
- 
+    private int planetId;
     
 }

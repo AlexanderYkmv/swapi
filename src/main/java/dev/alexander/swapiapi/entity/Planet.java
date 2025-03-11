@@ -6,6 +6,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -23,7 +26,10 @@ public class Planet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private int id;
-
+   
+    @Column(name="name")
+    private String name;
+   
     @Column(name="rotation_period")
     private int rotationPeriod;
 
@@ -47,4 +53,11 @@ public class Planet {
                                         
     @OneToMany(mappedBy = "homeworld")
     private Set<Person> people;
+
+    @ManyToMany
+    @JoinTable(
+        name = "planet_film",
+        joinColumns = @JoinColumn(name="planet_id"),
+        inverseJoinColumns = @JoinColumn(name="film_id"))
+    private Set<Film> films;
 }

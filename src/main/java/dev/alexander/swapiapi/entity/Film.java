@@ -36,6 +36,9 @@ public class Film {
     @ManyToMany(mappedBy="films")
     private Set<Person> person;    
 
+    @ManyToMany(mappedBy = "films")
+    private Set<Planet> planets;
+
 } 
 
 

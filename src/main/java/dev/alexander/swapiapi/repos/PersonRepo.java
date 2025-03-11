@@ -5,6 +5,4 @@ import org.springframework.stereotype.Repository;
 import dev.alexander.swapiapi.entity.Person;
 
 @Repository
-public interface PersonRepo extends JpaRepository <Person,Integer>  {
-
-}
+public interface PersonRepo extends JpaRepository <Person,Integer> {}

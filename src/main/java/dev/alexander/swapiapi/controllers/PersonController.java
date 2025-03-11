@@ -42,7 +42,6 @@ public class PersonController {
     @PostMapping("/people")
     public ResponseEntity<PersonDTO> postPerson(@RequestBody PersonDTO persondDto) {
         persondDto = personService.save(persondDto);
-        
         return new ResponseEntity<>(persondDto, HttpStatus.CREATED);
     }
     
