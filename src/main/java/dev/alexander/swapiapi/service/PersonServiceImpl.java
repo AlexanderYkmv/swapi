@@ -1,13 +1,17 @@
 package dev.alexander.swapiapi.service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import dev.alexander.swapiapi.dto.PersonDTO;
+import dev.alexander.swapiapi.entity.Film;
 import dev.alexander.swapiapi.entity.Person;
 import dev.alexander.swapiapi.errors.PersonNotFoundException;
 import dev.alexander.swapiapi.mappers.PersonMapper;
+import dev.alexander.swapiapi.repos.FilmRepo;
 import dev.alexander.swapiapi.repos.PersonRepo;
 import dev.alexander.swapiapi.repos.PlanetRepo;
 
@@ -22,6 +26,9 @@ public class PersonServiceImpl implements PersonService {
     
     @Autowired
     PlanetRepo planetRepo;
+
+    @Autowired
+    FilmRepo filmRepo;
     
     public PersonServiceImpl(PersonRepo personRepo, PersonMapper personMapper, PlanetRepo planetRepo) {
         this.personRepo = personRepo; 
@@ -55,5 +62,15 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public void deleteById(int id) {
         personRepo.deleteById(id);
+    }
+
+    @Override
+    public void setPersonFilms(int id, Set<Integer> filmIds){
+            Person person = personRepo.findById(id)
+            .orElseThrow(() -> new PersonNotFoundException("Person not found: " + id));
+        
+        Set<Film> allFilms = new HashSet<>(filmRepo.findAllById(filmIds));
+        person.setFilms(allFilms);
+        personRepo.save(person);
     }
 }
